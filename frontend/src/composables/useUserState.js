@@ -9,17 +9,19 @@ const userState = ref({
 
 export default () => {
   const user = computed(() => userState.value);
-  const login = payload => (userState.value = payload);
-  const logout = () =>
-    (userState.value = {
+  const setLogin = payload => (userState.value = payload);
+  const logout = () => {
+    userState.value = {
       firstName: null,
       lastName: null,
       image: null,
       isAdmin: false
-    });
+    };
+    localStorage.removeItem("token");
+  };
   return {
     user,
-    login,
+    setLogin,
     logout
   };
 };

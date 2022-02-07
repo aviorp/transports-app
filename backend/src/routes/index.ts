@@ -1,9 +1,10 @@
 import General from "./General";
 import Auth from "./Auth";
-import User from "./User";
-
+import Transports from "./Transports";
+import Vehicle from "./Vehicle";
 export default [
   { path: "/", module: General },
   { path: "/auth", module: Auth },
-  { path: "/users", module: User },
+  { path: "/transports", module: Transports },
+  { path: "/vehicles", module: Vehicle }
 ];

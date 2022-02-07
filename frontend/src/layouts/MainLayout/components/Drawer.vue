@@ -8,7 +8,7 @@
     persistent
   >
     <header
-      class="row items-center justify-center q-gutter-md q-px-lg q-py-2xl"
+      class="column items-center justify-center q-gutter-md q-px-lg q-py-2xl"
     >
       <q-avatar size="84px" class="avatar">
         <img :src="user.image" />
@@ -59,9 +59,9 @@ export default {
     const { isDrawerOpen, items } = useMenuSettings();
     const { user, logout } = useUserState();
     const { setNotification } = useGeneralStates();
-    const $router = useRouter();
+    const router = useRouter();
     const onLogout = () => {
-      $router.push({ name: "login" });
+      router.push({ name: "login" });
       logout();
       setNotification("Logged out Successfully");
     };
@@ -69,8 +69,8 @@ export default {
       isDrawerOpen,
       items,
       user,
-      onLogout,
-      $router
+      router,
+      onLogout
     };
   }
 };

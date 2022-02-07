@@ -28,9 +28,6 @@
               <h3 class="text-h5 text-uppercase q-mt-2xl text-weight-regular">
                 Login
               </h3>
-              <!-- <h5 class="text-h5 text-uppercase q-my-none text-weight-regular">
-                מערכת הסעות
-              </h5> -->
             </div>
           </div>
         </q-card-section>
@@ -39,7 +36,7 @@
             class="q-gutter-md q-pa-lg q-mb-md"
             @submit.prevent="submitForm"
           >
-            <q-input label="Username" v-model="username"> </q-input>
+            <q-input label="Email" v-model="email"> </q-input>
             <q-input label="Password" type="password" v-model="password">
             </q-input>
             <div class="q-py-lg">
@@ -50,11 +47,10 @@
                 type="submit"
                 rounded
                 dark
-                @click="submitForm"
-              ></q-btn>
+              />
               <div class="text-center q-mt-lg q-gutter-lg">
                 <router-link to="/login">Forgot Password</router-link>
-                <router-link to="/login">Register</router-link>
+                <router-link to="/register">Register</router-link>
               </div>
             </div>
           </q-form>
@@ -69,33 +65,37 @@ import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import useUserState from "@/composables/useUserState";
 import useGeneralStates from "@/composables/useGeneralStates";
+import { login } from "@/api/auth";
+import { getPropFromToken } from "@/utils";
 export default defineComponent({
   name: "login",
   setup() {
-    const { login } = useUserState();
+    const { setLogin } = useUserState();
     const { showLoading, hideLoading, setNotification } = useGeneralStates();
     const router = useRouter();
-    const username = ref("");
+    const email = ref("");
     const password = ref("");
 
-    const submitForm = () => {
+    const submitForm = async () => {
       showLoading();
-      setTimeout(() => {
-        login({
-          firstName: "Abioz",
-          lastName: "Feldmunch",
-          image:
-            "https://i.scdn.co/image/ab67706c0000bebb73ecf178e9cf5eb439f58635",
-          isAdmin: true
+      try {
+        const token = await login({
+          email: email.value,
+          password: password.value
         });
-        hideLoading();
-        setNotification("User Connected.");
+        localStorage.setItem("token", token);
+        const user = getPropFromToken();
+        setLogin(user);
         router.push({ name: "home" });
-        toggleLoading();
-      }, 3000);
+        setNotification("User Connected.");
+      } catch (error) {
+        setNotification(error.message, "negative");
+      } finally {
+        hideLoading();
+      }
     };
     return {
-      username,
+      email,
       password,
       submitForm
     };

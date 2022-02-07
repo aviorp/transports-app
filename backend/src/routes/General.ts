@@ -9,7 +9,7 @@ const router = express.Router();
  */
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.status(200).json({message:"Use /swagger to see and try all the entities."});
+    res.status(200).send("Hello and Welcome to my server");
   } catch (error) {
     next(error);
   }

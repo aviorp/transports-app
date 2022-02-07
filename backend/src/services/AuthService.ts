@@ -10,7 +10,7 @@ class AuthService {
   }
   generateToken(user: UserI) {
     return jwt.sign(JSON.parse(JSON.stringify(user)), config.jwtSecret, {
-      expiresIn: 600000,
+      expiresIn: 600000
     });
   }
 
@@ -21,6 +21,8 @@ class AuthService {
   async login(password: string, user: UserI) {
     const isValid = await this.comparePasswords(password, user.password!);
     if (!user || !isValid) return "Invalid User or Password";
+    const signedUser = user;
+    delete signedUser.password;
     const token = this.generateToken(user);
     return token;
   }

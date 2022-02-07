@@ -1,4 +1,4 @@
-import { computed, ref, watch } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { Dark } from "quasar";
 import { MENU_ITEMS } from "./composables.constants";
 const menuItems = ref(MENU_ITEMS);
@@ -9,7 +9,7 @@ export default () => {
   const title = ref("Title");
   const isDrawerOpen = computed(() => menuIsDrawerOpen.value);
   const isDarkMode = ref(false);
-  watch(() => {
+  watchEffect(() => {
     Dark.set(isDarkMode.value);
   });
   const toggleMenu = () => (menuIsDrawerOpen.value = !menuIsDrawerOpen.value);

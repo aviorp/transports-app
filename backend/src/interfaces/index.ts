@@ -10,7 +10,30 @@ export interface UserI {
   toObject?: void;
 }
 
-export interface Error {
-  message: string,
-  status?:string,
+export interface TransportI {
+  _id: string;
+  origin: string;
+  destination: string;
+  fromDate: Date;
+  toDate: Date;
+  fromTime: Date;
+  toTime: Date;
+  isPermanent: boolean;
+  seatsNumber: number;
+  vehicleType: string;
+  contactName: string;
+  contactPhone: number;
+  routes: [];
+  isActive: boolean;
+  isPending: boolean;
+}
+
+export interface VehicleI {
+  _id: string;
+  type: string;
+  seatsNumber: number;
+  kilometers: number;
+  fuelStatus: number;
+  history: [];
+  isApprovedForKids: boolean;
 }
